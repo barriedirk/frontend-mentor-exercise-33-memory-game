@@ -1,0 +1,11 @@
+@use '../../../sass/utils/mixins' as *;
+
+.button {
+  @include text-preset-9;
+  background-color: var(--clr-orange-400);
+  color: var(--clr-white);
+
+  min-height: 48px;
+  border-radius: 26px;
+  width: 100%;
+}

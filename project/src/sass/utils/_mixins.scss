@@ -1,83 +1,89 @@
-$text-presets: (
-  1: (
-    font-size: 56px,
-    line-height: 125%,
-    letter-spacing: 0px,
-  ),
-  2: (
-    font-size: 48px,
-    line-height: 125%,
-    letter-spacing: 0px,
-  ),
-  3: (
-    font-size: 44px,
-    line-height: 125%,
-    letter-spacing: 0px,
-  ),
-  4: (
-    font-size: 40px,
-    line-height: 125%,
-    letter-spacing: 0px,
-  ),
-  5: (
-    font-size: 32px,
-    line-height: 125%,
-    letter-spacing: 0px,
-  ),
-  6: (
-    font-size: 26px,
-    line-height: 125%,
-    letter-spacing: 0px,
-  ),
-  7: (
-    font-size: 24px,
-    line-height: 125%,
-    letter-spacing: 0px,
-  ),
-  8: (
-    font-size: 20px,
-    line-height: 125%,
-    letter-spacing: 0px,
-  ),
-  9: (
-    font-size: 18px,
-    line-height: 125%,
-    letter-spacing: 0px,
-  ),
-  10: (
-    font-size: 16px,
-    line-height: 125%,
-    letter-spacing: 0px,
-  ),
-  11: (
-    font-size: 15px,
-    line-height: 125%,
-    letter-spacing: 0px,
-  ),
-  12: (
-    font-size: 14px,
-    line-height: 125%,
-    letter-spacing: 0px,
-  ),
-  13: (
-    font-size: 13px,
-    line-height: 125%,
-    letter-spacing: 5px,
-  ),
-);
-
-@mixin text-preset($level) {
-  $preset: map-get($text-presets, $level);
-
-  font-family: 'Atkinson Hyperlegible', sans-serif;
-  font-weight: bold;
-  font-size: map-get($preset, font-size);
-  line-height: map-get($preset, line-height);
-  letter-spacing: map-get($preset, letter-spacing);
+@mixin max-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
 }
 
-@for $i from 1 through 13 {
-  .text-preset-#{$i} {
-    @include text-preset($i);
-  }
+@mixin text-preset-base {
+  font-family: var(--ff);
+  font-weight: var(--fw-bold);
+  line-height: 125%;
+}
+
+@mixin text-preset-1 {
+  @include text-preset-base;
+  font-size: var(--fs-56);
+  letter-spacing: 0px;
+}
+
+@mixin text-preset-2 {
+  @include text-preset-base;
+  font-size: var(--fs-48);
+  letter-spacing: 0px;
+}
+
+@mixin text-preset-3 {
+  @include text-preset-base;
+  font-size: var(--fs-44);
+  letter-spacing: 0px;
+}
+
+@mixin text-preset-4 {
+  @include text-preset-base;
+  font-size: var(--fs-40);
+  letter-spacing: 0px;
+}
+
+@mixin text-preset-5 {
+  @include text-preset-base;
+  font-size: var(--fs-32);
+  letter-spacing: 0px;
+}
+
+@mixin text-preset-6 {
+  @include text-preset-base;
+  font-size: var(--fs-26);
+  letter-spacing: 0px;
+}
+
+@mixin text-preset-7 {
+  @include text-preset-base;
+  font-size: var(--fs-24);
+  letter-spacing: 0px;
+}
+
+@mixin text-preset-8 {
+  @include text-preset-base;
+  font-size: var(--fs-20);
+  letter-spacing: 0px;
+}
+
+@mixin text-preset-9 {
+  @include text-preset-base;
+  font-size: var(--fs-18);
+  letter-spacing: 0px;
+}
+
+@mixin text-preset-10 {
+  @include text-preset-base;
+  font-size: var(--fs-16);
+  letter-spacing: 0px;
+}
+
+@mixin text-preset-11 {
+  @include text-preset-base;
+  font-size: var(--fs-15);
+  letter-spacing: 0px;
+}
+
+@mixin text-preset-12 {
+  @include text-preset-base;
+  font-size: var(--fs-14);
+  letter-spacing: 0px;
+}
+
+@mixin text-preset-13 {
+  @include text-preset-base;
+  font-size: var(--fs-13);
+  letter-spacing: 5px;
 }

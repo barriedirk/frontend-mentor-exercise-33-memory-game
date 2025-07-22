@@ -5,8 +5,7 @@
 @use './utils/variables';
 @use './utils/text-preset-styles';
 @use './utils/helpers';
-
-@use './themes/theme';
+@use './utils/forms';
 
 button:disabled {
   opacity: 0.4;

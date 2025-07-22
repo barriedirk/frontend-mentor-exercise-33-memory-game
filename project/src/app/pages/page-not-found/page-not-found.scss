@@ -1,0 +1,37 @@
+.not-found-container {
+  min-height: 100dvh;
+  width: 100%;
+  background-color: var(--clr-blue-350);
+  color: var(--clr-grey-950);
+
+  & h1 {
+    font-size: var(--fs-96);
+    font-weight: var(--fw-bold);
+    color: var(--clr-rose-500);
+    margin: 0;
+  }
+
+  & h2 {
+    font-size: var(--fs-32);
+    margin: 1rem 0;
+  }
+
+  & p {
+    font-size: var(--fs-16);
+    margin-bottom: 2rem;
+  }
+
+  .btn-home {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--clr-orange-400);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .btn-home:hover {
+    background-color: vzr(--clr-orange-400);
+  }
+}

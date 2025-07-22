@@ -1,0 +1,14 @@
+<div class="form-group">
+  @if (label) {
+    <label class="form-label">{{ label }}</label>
+  }
+
+  <div class="form-group__radio-option">
+    @for (option of options; track option) {
+      <label>
+        <input [formControl]="control" [value]="option" type="radio" />
+        {{ option }}
+      </label>
+    }
+  </div>
+</div>

@@ -1,16 +1,23 @@
 :root {
-  --clr-white: hsl(0, 0%, 100%);
-  --clr-emptiness: hsl(0, 0%, 99%);
+  --clr-white: hsl(0, 100%, 100%);
   --clr-black: hsl(0, 0, 0%);
 
-  --clr-blue-950: hsl(207, 26%, 17%);
-  --clr-blue-900: hsl(209, 23%, 22%);
+  --clr-blue-950: hsl(206, 45%, 15%);
+  --clr-blue-800: hsl(205, 30%, 27%);
+  --clr-blue-400: hsl(203, 22%, 55%);
+  --clr-blue-350: hsl(205, 37%, 55%);
+  --clr-blue-300: hsl(203, 28%, 79%);
+  --clr-blue-100: hsl(203, 25%, 90%);
+
+  --clr-orange-400: hsl(37, 98%, 54%);
+  --clr-orange-300: hsl(36, 100%, 65%);
 
   --clr-grey-950: hsl(200, 15%, 8%);
   --clr-grey-400: hsl(0, 0%, 50%);
   --clr-grey-350: hsl(0, 0%, 59%);
   --clr-grey-300: hsl(0, 0%, 70%);
   --clr-grey-250: hsl(0, 0%, 77%);
+  --clr-grey-100: hsl(0, 0%, 95%);
   --clr-grey-50: hsl(0, 0%, 99%);
 
   --ff: 'Atkinson Hyperlegible', sans-serif;

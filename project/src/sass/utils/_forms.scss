@@ -1,0 +1,10 @@
+@use './mixins' as *;
+
+.form {
+  &-group {
+  }
+  &-label {
+    @include text-preset-11;
+    color: var(--clr-blue-400);
+  }
+}
