@@ -8,4 +8,9 @@
   min-height: 48px;
   border-radius: 26px;
   width: 100%;
+
+  @media screen and (min-width: 41em) {
+    @include text-preset-5;
+    min-height: 70px;
+  }
 }

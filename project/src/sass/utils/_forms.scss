@@ -2,9 +2,74 @@
 
 .form {
   &-group {
+    border: none;
+    &__radio-option {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 10px;
+    }
   }
+
   &-label {
     @include text-preset-11;
+
     color: var(--clr-blue-400);
+    display: inline-block;
+  }
+
+  @media screen and (min-width: 41em) {
+    &-label {
+      @include text-preset-8;
+    }
+  }
+}
+
+.form-custom-radio {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  flex: 1 1 0;
+
+  &:focus {
+    outline: 1px solid var(--clr-orange-300);
+    outline-offset: 2px;
+    border-radius: 26px;
+  }
+
+  .f-radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+
+    &:checked + .f-radio-text {
+      background-color: var(--clr-blue-800);
+    }
+  }
+
+  .f-radio-text {
+    @include text-preset-10;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    padding: 2px 5px;
+    min-height: 40px;
+    color: var(--clr-white);
+    background-color: var(--clr-blue-300);
+    border-radius: 26px;
+  }
+
+  @media screen and (min-width: 41em) {
+    .f-radio-text {
+      @include text-preset-6;
+
+      padding: 5px 5px;
+      min-height: 52px;
+    }
   }
 }

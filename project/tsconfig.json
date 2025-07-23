@@ -16,7 +16,9 @@
     "paths": {
       "@pages/*": ["src/app/pages/*"],
       "@components/*": ["src/app/components/*"],
-      "@interfaces/*": ["src/interfaces/*"],
+      "@interfaces/*": ["src/app/interfaces/*"],
+      "@guards/*": ["src/app/guards/*"],
+      "@store": ["src/app/store/index.ts"],
       "@app/*": ["src/app/*"]
     }
   },

@@ -1,10 +1,10 @@
 <main class="main-page center" aria-describedby="main-page__title" role="group">
   <div class="main-page__wrapper center">
     <h1 class="main-page__title text-preset-5" id="main-page__title">memory</h1>
-    <form class="main-page__form m-width bg-white" [formGroup]="memoryForm">
-      <app-radio-group [options]="themeOptions" [control]="themeControl" label="Select Theme" />
-      <app-radio-group [options]="playersOptions" [control]="playerControl" label="Numbers of Players" />
-      <app-radio-group [options]="gridOptions" [control]="gridControl" label="Grid Size" />
+    <form class="main-page__form bg-white" [formGroup]="memoryForm">
+      <app-radio-group [options]="themeOptions" [control]="themeControl" name="theme" label="Select Theme" />
+      <app-radio-group [options]="playersOptions" [control]="playerControl" name="player" label="Numbers of Players" />
+      <app-radio-group [options]="gridOptions" [control]="gridControl" name="grid" label="Grid Size" />
 
       <div class="form-group">
         <app-button (onClick)="startGame()" text="Start Game" />

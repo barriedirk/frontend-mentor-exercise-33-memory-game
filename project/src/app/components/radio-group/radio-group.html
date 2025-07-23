@@ -1,14 +1,29 @@
-<div class="form-group">
+<fieldset class="form-group" [attr.aria-labelledby]="labelledby" role="radiogroup">
   @if (label) {
-    <label class="form-label">{{ label }}</label>
+    <label class="form-label mb-10" [id]="labelledby">{{ label }}</label>
   }
 
   <div class="form-group__radio-option">
     @for (option of options; track option) {
-      <label>
-        <input [formControl]="control" [value]="option" type="radio" />
-        {{ option }}
+      <label
+        class="form-custom-radio"
+        #radioItem
+        [attr.aria-checked]="control.value === option"
+        [attr.tabindex]="control.value === option ? '0' : '-1'"
+        (click)="selecRadio(option)"
+        (keydown)="handleRadioKeydown($event, option)">
+        <input
+          class="f-radio"
+          [formControl]="control"
+          [value]="option"
+          [attr.name]="name"
+          type="radio"
+          tabindex="-1"
+          aria-hidden="true" />
+        <span class="f-radio-text">
+          {{ option }}
+        </span>
       </label>
     }
   </div>
-</div>
+</fieldset>
