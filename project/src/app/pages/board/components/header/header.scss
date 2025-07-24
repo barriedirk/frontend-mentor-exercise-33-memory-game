@@ -1,0 +1,32 @@
+@use '../../../../../sass/utils/mixins' as *;
+
+:host(.board__header) {
+  grid-area: header;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 24px;
+
+  &__title {
+    @include text-preset-7;
+
+    color: var(--clr-blue-950);
+  }
+
+  &__options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  @media screen and (min-width: 40em) {
+    padding-block: 36px;
+
+    &__title {
+      @include text-preset-4;
+    }
+  }
+}

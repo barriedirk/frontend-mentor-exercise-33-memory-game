@@ -1,0 +1,5 @@
+@use '../../../../../sass/utils/mixins' as *;
+
+:host(.board__table) {
+  grid-area: table;
+}

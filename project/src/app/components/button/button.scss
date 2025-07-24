@@ -2,8 +2,6 @@
 
 .button {
   @include text-preset-9;
-  background-color: var(--clr-orange-400);
-  color: var(--clr-white);
 
   min-height: 48px;
   border-radius: 26px;
@@ -12,5 +10,28 @@
   @media screen and (min-width: 41em) {
     @include text-preset-5;
     min-height: 70px;
+  }
+}
+
+.button--orange {
+  background-color: var(--clr-orange-400);
+  color: var(--clr-white);
+}
+
+.button--blue {
+  background-color: var(--clr-blue-100);
+  color: var(--clr-blue-800);
+}
+
+:host(.button--header) .button {
+  @include text-preset-10;
+
+  min-height: 40px;
+  padding-inline: 15px;
+  width: auto;
+
+  @media screen and (min-width: 41em) {
+    @include text-preset-8;
+    min-height: 52px;
   }
 }

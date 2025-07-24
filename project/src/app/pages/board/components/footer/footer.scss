@@ -1,0 +1,19 @@
+@use '../../../../../sass/utils/mixins' as *;
+
+:host(.board__footer) {
+  grid-area: footer;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-block: 23px;
+
+  &-card {
+    flex: 1 1 0;
+  }
+}

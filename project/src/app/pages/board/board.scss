@@ -1,0 +1,39 @@
+.board {
+  background-color: var(--clr-white);
+  color: var(--clr-blue-950);
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 1110px;
+  margin-inline: auto;
+
+  &__wrapper {
+    padding-inline: 24px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      'header'
+      'table'
+      'footer';
+
+    min-height: 100dvh;
+  }
+
+  &__header {
+    grid-area: header;
+  }
+
+  &__table {
+    grid-area: table;
+  }
+
+  &__footer {
+    grid-area: footer;
+  }
+
+  @media screen and (min-width: 40em) {
+    &__wrapper {
+      padding-inline: 45px;
+    }
+  }
+}

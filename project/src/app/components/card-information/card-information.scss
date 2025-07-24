@@ -1,0 +1,62 @@
+@use '../../../sass/utils/mixins' as *;
+
+.card-information {
+  position: relative;
+  min-height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  padding: 5px 10px;
+  width: 100%;
+  border-radius: 5px;
+
+  background-color: var(--clr-blue-100);
+
+  &__title {
+    @include text-preset-11;
+
+    color: var(--clr-blue-400);
+  }
+
+  &__value {
+    @include text-preset-7;
+
+    color: var(--clr-blue-800);
+  }
+
+  &.selected {
+    background-color: var(--clr-orange-400);
+
+    .card-information__title,
+    .card-information__value {
+      color: var(--clr-grey-50);
+    }
+
+    &::after {
+      position: absolute;
+      content: ' ';
+      top: 0;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      background: var(--clr-orange-400);
+      transform: translateX(-50%) translateY(-50%) rotate(135deg);
+    }
+  }
+
+  @media screen and (min-width: 40em) {
+    align-items: flex-start;
+    min-height: 80px;
+    gap: 10px;
+
+    &.row {
+      min-height: 72px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding-inline: 20px;
+    }
+  }
+}
