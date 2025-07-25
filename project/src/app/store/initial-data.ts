@@ -1,7 +1,9 @@
 import { Memory } from '@interfaces/memory';
 
 export const initialData: Memory = {
-  theme: '',
-  player: '',
-  grid: '',
+  settings: {
+    theme: '',
+    players: 0,
+    grid: '',
+  },
 };

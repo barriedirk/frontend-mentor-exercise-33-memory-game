@@ -1,14 +1,14 @@
 import { InjectionToken } from '@angular/core';
-import { Memory } from '@interfaces/memory';
+import { Memory, Settings } from '@interfaces/memory';
 import { initialData } from './initial-data';
 
 function isValidMemoryItem(obj: any): obj is Memory {
+  if (typeof obj !== 'object' || obj === null) return false;
+
   return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    typeof obj.theme === 'string' &&
-    typeof obj.player === 'string' &&
-    typeof obj.grid === 'string'
+    typeof obj.settings?.theme === 'string' &&
+    typeof obj.settings?.player === 'number' &&
+    typeof obj.settings?.grid === 'string'
   );
 }
 
@@ -39,10 +39,10 @@ export const MEMORY_STATE = new InjectionToken<Memory>('Memory', {
           localStorage.setItem(localstorageName, JSON.stringify(memory));
         }
       } catch (e) {
-        console.error('Error parsing cart from localStorage:', e);
+        console.error('Error parsing memory from localStorage:', e);
 
         memory = initialData;
-        localStorage.setItem('cart', JSON.stringify(memory));
+        localStorage.setItem(localstorageName, JSON.stringify(memory));
       }
     }
 

@@ -18,6 +18,7 @@
       "@components/*": ["src/app/components/*"],
       "@interfaces/*": ["src/app/interfaces/*"],
       "@guards/*": ["src/app/guards/*"],
+      "@functions/*": ["src/app/functions/*"],
       "@store": ["src/app/store/index.ts"],
       "@app/*": ["src/app/*"]
     }

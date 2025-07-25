@@ -1,5 +1,9 @@
 export interface Memory {
+  settings: Settings;
+}
+
+export interface Settings {
   theme: string;
-  player: string;
+  players: number;
   grid: string;
 }

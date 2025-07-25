@@ -5,11 +5,11 @@ import { GlobalStore } from '@store';
 
 export const boardAccessGuard: CanActivateFn = () => {
   const router = inject(Router);
-  const globalStore = inject(GlobalStore);
+  const store = inject(GlobalStore);
 
-  const game = globalStore.game();
+  const game = store.settings();
 
-  const isValid = game.theme !== '' && game.player !== null && game.grid !== null;
+  const isValid = game.theme !== '' && game.players !== null && game.grid !== null;
 
   if (isValid) return true;
 

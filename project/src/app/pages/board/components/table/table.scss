@@ -3,3 +3,23 @@
 :host(.board__table) {
   grid-area: table;
 }
+
+.table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  &__grid {
+    display: grid;
+    margin: auto;
+    gap: 10px;
+
+    &.grid-6x6 {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    &.grid-4x4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}

@@ -62,6 +62,11 @@
     color: var(--clr-white);
     background-color: var(--clr-blue-300);
     border-radius: 26px;
+
+    &:is(:focus, :hover, :active) {
+      background-color: var(--clr-blue-350);
+      color: var(--clr-white);
+    }
   }
 
   @media screen and (min-width: 41em) {

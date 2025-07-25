@@ -1,10 +1,17 @@
-<div class="flip-card">
+<div
+  class="flip-card"
+  [ngClass]="cardClasses"
+  [class.temporal-selected]="temporalSelected"
+  [class.selected]="selected"
+  (click)="click()">
   <div class="flip-card__inner">
-    <div class="flip-card__front">
-      <app-icon [iconId]="iconId"></app-icon>
-    </div>
+    <div class="flip-card__front"></div>
     <div class="flip-card__back">
-      {{ backText }}
+      @if (useIcons) {
+        <app-icon [iconId]="value" />
+      } @else {
+        <span>{{ value }}</span>
+      }
     </div>
   </div>
 </div>

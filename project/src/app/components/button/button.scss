@@ -16,11 +16,20 @@
 .button--orange {
   background-color: var(--clr-orange-400);
   color: var(--clr-white);
+
+  &:is(:focus, :hover, :active) {
+    background-color: var(--clr-orange-300);
+  }
 }
 
 .button--blue {
   background-color: var(--clr-blue-100);
   color: var(--clr-blue-800);
+
+  &:is(:focus, :hover, :active) {
+    background-color: var(--clr-blue-350);
+    color: var(--clr-white);
+  }
 }
 
 :host(.button--header) .button {

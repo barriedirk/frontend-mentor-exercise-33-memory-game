@@ -1,5 +1,11 @@
 <section class="footer">
-  <app-card-information class="footer-card" direction="row" title="Time" value="0:33" />
-  <app-card-information class="footer-card" [selected]="true" title="Moves" value="39" />
-  <app-card-information class="footer-card" title="P1" value="4" />
+  @if (nPlayers === 1) {
+    <app-card-information class="footer-card" direction="row" title="Time" value="0:00" />
+    <app-card-information class="footer-card" direction="row" title="Moves" value="0" />
+  } @else {
+    @for (player of players; track player.id) {
+      <!-- <app-card-information class="footer-card" [selected]="true" title="Moves" value="39" /> -->
+      <app-card-information class="footer-card" [title]="`P${player.id}`" [value]="`${player.moves}`" />
+    }
+  }
 </section>

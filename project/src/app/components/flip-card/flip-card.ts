@@ -1,17 +1,41 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Icon } from '@components/icon/icon';
 
 @Component({
   selector: 'app-flip-card',
-  imports: [Icon],
+  imports: [NgClass, Icon],
   templateUrl: './flip-card.html',
   styleUrl: './flip-card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FlipCard {
   @Input() value!: number;
-  @Input() useSign!: boolean;
+  @Input() idx!: number;
+  @Input() useIcons!: boolean;
+  @Input() temporalSelected: boolean = false;
+  @Input() selected: boolean = false;
+
+  @Output() choice = new EventEmitter<void>();
+
+  cardClasses: string[] = [`size--small`];
+  private _size: 'small' | 'normal' = 'small';
+
+  @Input()
+  set size(value: 'small' | 'normal') {
+    if (value !== this._size) {
+      this._size = value;
+      this.cardClasses = [`size--${value}`];
+    }
+  }
+  get size() {
+    return this._size;
+  }
 
   @Input() iconId: number = 1;
   @Input() backText: string = 'Back side info';
+
+  click() {
+    this.choice.emit();
+  }
 }

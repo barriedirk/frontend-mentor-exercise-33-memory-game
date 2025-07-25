@@ -1,1 +1,7 @@
-<p>table works!</p>
+<section class="table" [class.icons]="useIcons">
+  <div class="table__grid" [ngClass]="gridClass">
+    @for (i of range; track i; let idx = $index) {
+      <app-flip-card [useIcons]="useIcons" [value]="allPairs[idx].value" [idx]="idx" [size]="size" />
+    }
+  </div>
+</section>
