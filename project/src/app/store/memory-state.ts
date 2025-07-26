@@ -1,8 +1,8 @@
 import { InjectionToken } from '@angular/core';
-import { Memory, Settings } from '@interfaces/memory';
+import { Game, Memory, Settings } from '@interfaces/memory';
 import { initialData } from './initial-data';
 
-function isValidMemoryItem(obj: any): obj is Memory {
+function isValidSettingsObject(obj: any): obj is Memory {
   if (typeof obj !== 'object' || obj === null) return false;
 
   return (
@@ -12,38 +12,36 @@ function isValidMemoryItem(obj: any): obj is Memory {
   );
 }
 
-const localstorageName = 'memory';
+export type ValueType = Settings | Game;
+export type StorageType = 'settings' | 'game';
 
-export const updateStorage = async (memory: Memory) => {
-  localStorage.setItem(localstorageName, JSON.stringify(memory));
+export const updateStorage = async (name: StorageType, value: Settings | Game) => {
+  localStorage.setItem(name, JSON.stringify(value));
 };
 
 export const MEMORY_STATE = new InjectionToken<Memory>('Memory', {
   factory: () => {
-    const memoryRaw = localStorage.getItem(localstorageName);
     let memory: Memory = initialData;
 
-    if (!memoryRaw) {
-      localStorage.setItem(localstorageName, JSON.stringify(initialData));
-    } else {
-      try {
-        const parsed = JSON.parse(memoryRaw);
+    try {
+      const settingsRaw = localStorage.getItem('settings');
+      const gameRaw = localStorage.getItem('game');
 
-        const isValid = typeof parsed === 'object' && parsed !== null && Object.values(parsed).every(isValidMemoryItem);
+      if (!settingsRaw || !gameRaw) throw new Error('Missing data');
 
-        if (isValid) {
-          memory = parsed;
-        } else {
-          console.warn('Invalid memory data in localStorage. Resetting.');
+      const settings = JSON.parse(settingsRaw) as Settings;
+      const game = JSON.parse(gameRaw) as Game;
 
-          localStorage.setItem(localstorageName, JSON.stringify(memory));
-        }
-      } catch (e) {
-        console.error('Error parsing memory from localStorage:', e);
+      const isValid = isValidSettingsObject(settings);
 
-        memory = initialData;
-        localStorage.setItem(localstorageName, JSON.stringify(memory));
-      }
+      if (!isValid || typeof game !== 'object') throw new Error('Invalid format');
+
+      memory = { settings, game };
+    } catch (e) {
+      console.warn('Error loading memory from localStorage. Resetting.', e);
+
+      localStorage.setItem('settings', JSON.stringify(initialData.settings));
+      localStorage.setItem('game', JSON.stringify(initialData.game));
     }
 
     return memory;

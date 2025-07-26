@@ -17,7 +17,7 @@ import { Settings } from '@interfaces/memory';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainPage {
-  private memoryStore = inject(GlobalStore);
+  private store = inject(GlobalStore);
   private router = inject(Router);
 
   themeOptions = ['Numbers', 'Icons'];
@@ -38,7 +38,8 @@ export class MainPage {
     const settingsRaw = this.memoryForm.value as any;
     const settings: Settings = { ...settingsRaw, players: Number(settingsRaw.players) };
 
-    this.memoryStore.updatSettinge(settings);
+    this.store.updateSettings(settings);
+    this.store.initGame();
 
     this.router.navigate(['/board']);
   }
