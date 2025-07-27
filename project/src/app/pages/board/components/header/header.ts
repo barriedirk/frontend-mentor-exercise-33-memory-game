@@ -1,6 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+
+import { StatusEnum } from '@interfaces/memory';
 
 import { Button } from '@components/button/button';
+import { GlobalStore } from '@store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +14,14 @@ import { Button } from '@components/button/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
-  restart() {}
+  private router = inject(Router);
+  private store = inject(GlobalStore);
 
-  newGame() {}
+  restart() {
+    this.store.updateStatusGame(StatusEnum.Restart);
+  }
+
+  newGame() {
+    this.router.navigate(['/']);
+  }
 }

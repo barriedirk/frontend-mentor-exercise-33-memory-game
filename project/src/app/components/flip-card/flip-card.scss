@@ -1,5 +1,11 @@
 @use '../../../sass/utils/mixins' as *;
 
+:host(.not-allowed) {
+  .flip-card {
+    pointer-events: none;
+  }
+}
+
 .flip-card {
   width: 46px;
   height: 46px;
@@ -11,6 +17,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &.temporal-selected {
+    transform: rotateY(180deg);
+
+    &__inner {
+      background-color: var(--clr-blue-350);
+    }
+  }
+
+  &.selected {
+    transform: rotateY(180deg);
+
+    &__inner {
+      background-color: var(--clr-orange-400);
+    }
+  }
 
   &.size--normal {
     @include text-preset-4;

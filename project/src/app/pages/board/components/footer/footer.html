@@ -1,6 +1,6 @@
 <section class="footer">
   @if (nPlayers === 1) {
-    <app-card-information class="footer-card" [value]="timeFormat()" direction="row" title="Time" />
+    <app-card-information class="footer-card" [value]="timeFormatPipe.transform(time())" direction="row" title="Time" />
     <app-card-information class="footer-card" [value]="moves().toString()" direction="row" title="Moves" />
   } @else {
     @for (player of players; track player.index) {

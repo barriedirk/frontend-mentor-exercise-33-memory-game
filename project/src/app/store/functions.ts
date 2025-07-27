@@ -1,12 +1,13 @@
-import { Game, Player, Settings } from '@interfaces/memory';
+import { Game, Player, Settings, StatusEnum } from '@interfaces/memory';
 
 export function clearGame(): Game {
   return {
     players: [],
     currentPlayer: 0,
+    status: StatusEnum.NewGame,
     currentPair: {
-      pair1: -1,
-      pair2: -1,
+      p0: -1,
+      p1: -1,
     },
   };
 }
@@ -21,6 +22,7 @@ export function initGame(settings: Settings): Game {
       moves: 0,
       time: 0,
       win: 0,
+      pairSuccessful: 0,
     });
   }
 

@@ -16,7 +16,7 @@ export class FlipCard {
   @Input() temporalSelected: boolean = false;
   @Input() selected: boolean = false;
 
-  @Output() choice = new EventEmitter<void>();
+  @Output() selectedCard = new EventEmitter<void>();
 
   cardClasses: string[] = [`size--small`];
   private _size: 'small' | 'normal' = 'small';
@@ -36,6 +36,6 @@ export class FlipCard {
   @Input() backText: string = 'Back side info';
 
   click() {
-    this.choice.emit();
+    this.selectedCard.emit();
   }
 }

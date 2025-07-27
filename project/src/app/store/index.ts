@@ -4,7 +4,7 @@ import { signalStore, withState, withMethods, patchState } from '@ngrx/signals';
 import { MEMORY_STATE, updateStorage, StorageType } from './memory-state';
 import { initialData } from './initial-data';
 
-import { Settings, Game, Player } from '@interfaces/memory';
+import { Settings, Game, Player, StatusEnum } from '@interfaces/memory';
 import { clearGame, initGame } from './functions';
 
 function syncState<T>(key: StorageType, store: any, value: Settings | Game) {
@@ -37,13 +37,7 @@ export const GlobalStore = signalStore(
 
       syncState('game', store, game);
     },
-    getCurrentPlayer: computed<Player | undefined>(() => {
-      const game = store.game();
 
-      if (game.currentPlayer === 0 || game.currentPlayer - 1 > game.players.length) return undefined;
-
-      return game.players[game.currentPlayer - 1];
-    }),
     updatePlayerTime(index: number, time: number) {
       const game = store.game();
       const { players } = game;
@@ -55,5 +49,46 @@ export const GlobalStore = signalStore(
 
       syncState('game', store, { ...game, players });
     },
+    updateStatusGame(status: StatusEnum) {
+      const game = store.game();
+
+      syncState('game', store, { ...game, status });
+    },
+    updateCurrentMovesGame() {
+      const game = store.game();
+
+      if (game.currentPlayer === 0 || game.currentPlayer - 1 > game.players.length) return;
+
+      game.players[game.currentPlayer - 1].moves;
+
+      syncState('game', store, game);
+    },
+    updateCurrentPairSuccessfulGame() {
+      const game = store.game();
+
+      if (game.currentPlayer === 0 || game.currentPlayer - 1 > game.players.length) return;
+
+      game.players[game.currentPlayer - 1].pairSuccessful += 1;
+
+      syncState('game', store, game);
+    },
+
+    getCurrentPlayer: computed<Player | undefined>(() => {
+      const game = store.game();
+
+      if (game.currentPlayer === 0 || game.currentPlayer - 1 > game.players.length) return undefined;
+
+      return game.players[game.currentPlayer - 1];
+    }),
+    getStatusGame: computed<StatusEnum>(() => {
+      return store.game().status;
+    }),
+    getCurrentMovesGame: computed<StatusEnum>(() => {
+      const game = store.game();
+
+      if (game.currentPlayer === 0 || game.currentPlayer - 1 > game.players.length) return 0;
+
+      return game.players[game.currentPlayer - 1].moves;
+    }),
   })),
 );

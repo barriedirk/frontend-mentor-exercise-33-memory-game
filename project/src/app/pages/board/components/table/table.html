@@ -1,7 +1,15 @@
 <section class="table" [class.icons]="useIcons">
   <div class="table__grid" [ngClass]="gridClass">
-    @for (i of range; track i; let idx = $index) {
-      <app-flip-card [useIcons]="useIcons" [value]="allPairs[idx].value" [idx]="idx" [size]="size" />
+    @for (allPair of allPairs; track allPair.index) {
+      <app-flip-card
+        [class]="classCard"
+        [useIcons]="useIcons"
+        [value]="allPair.value"
+        [idx]="allPair.index"
+        [temporalSelected]="allPair.temporalSelected ?? false"
+        [selected]="allPair.selected ?? false"
+        [size]="size"
+        (selectedCard)="!allPair.selected && selectedCard(allPair.index)" />
     }
   </div>
 </section>

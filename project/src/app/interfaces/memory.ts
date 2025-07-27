@@ -1,3 +1,13 @@
+export enum StatusEnum {
+  Start = 1,
+  Stop = 2,
+  Continue = 3,
+  NewGame = 4,
+  Restart = 5,
+  ChangePlayer = 6,
+  GameOver = 7,
+}
+
 export interface Memory {
   settings: Settings;
   game: Game;
@@ -13,6 +23,7 @@ export interface Game {
   players: Player[];
   currentPlayer: number;
   currentPair: Pair;
+  status: StatusEnum;
 }
 
 export interface Player {
@@ -20,9 +31,10 @@ export interface Player {
   moves: number;
   time: number;
   win: number;
+  pairSuccessful: number;
 }
 
 export interface Pair {
-  pair1: number;
-  pair2: number;
+  p0: number;
+  p1: number;
 }
