@@ -16,21 +16,30 @@ export class Footer implements OnInit, OnDestroy {
   store = inject(GlobalStore);
   timeFormatPipe = new TimeFormatPipe();
   nPlayers: number = 0;
-  players: Player[] = [];
+  players = signal<Player[]>([]);
 
   intervalId: ReturnType<typeof setInterval> = 0;
 
-  currentPlayer = signal<number>(0);
+  currentIndex = signal<number>(0);
   time = signal<number>(0);
   moves = signal<number>(0);
-
-  get range(): number[] {
-    return Array.from({ length: this.nPlayers }, (_, i) => i);
-  }
 
   constructor() {
     let previousStatus: StatusEnum | null = null;
     let previousMoves: number | null = null;
+    let previousIndex: number | null = 0;
+
+    effect(() => {
+      const index: number = this.store.getIndexPlayer();
+
+      console.log('getIndexPlayer', index);
+
+      if (index === previousIndex) return;
+
+      previousIndex = index;
+
+      this.currentIndex.set(index);
+    });
 
     effect(() => {
       const moves: number = this.store.getCurrentMovesGame();
@@ -53,6 +62,11 @@ export class Footer implements OnInit, OnDestroy {
 
       switch (status) {
         case StatusEnum.ChangePlayer:
+          this.getLastPlayersInformation();
+          this.initializePlayer();
+          this.initInterval();
+
+          break;
         case StatusEnum.Start:
           this.initializePlayer();
           this.initInterval();
@@ -79,25 +93,22 @@ export class Footer implements OnInit, OnDestroy {
     });
   }
 
+  ngOnInit() {
+    const settings = this.store.settings();
+
+    this.nPlayers = +settings.players || 1;
+    this.getLastPlayersInformation();
+  }
+
   initializePlayer() {
     const games = this.store.game();
     const player = this.store.getCurrentPlayer();
 
     if (player) {
-      this.currentPlayer.set(games.currentPlayer);
+      this.currentIndex.set(games.currentPlayer - 1);
       this.time.set(player.time);
       this.moves.set(player.moves);
     }
-  }
-
-  ngOnInit() {
-    const settings = this.store.settings();
-    const games = this.store.game();
-
-    this.nPlayers = +settings.players || 1;
-    this.players = games.players;
-
-    const player = this.store.getCurrentPlayer();
   }
 
   initInterval() {
@@ -106,10 +117,16 @@ export class Footer implements OnInit, OnDestroy {
     this.intervalId = setInterval(() => this.updateTime(), 1000);
   }
 
+  getLastPlayersInformation() {
+    const games = this.store.game();
+
+    this.players.set(games.players);
+  }
+
   updateTime() {
     this.time.update((n) => n + 1);
 
-    this.store.updatePlayerTime(this.currentPlayer(), this.time());
+    this.store.updatePlayerTime(this.currentIndex(), this.time());
   }
 
   clearInterval() {

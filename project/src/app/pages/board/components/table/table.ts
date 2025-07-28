@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit }
 import { shuffle } from '@app/utils/functions';
 import { FlipCard } from '@components/flip-card/flip-card';
 import { Cell } from '@interfaces/cell';
-import { Pair } from '@interfaces/memory';
+import { Pair, StatusEnum } from '@interfaces/memory';
 import { GlobalStore } from '@store';
 
 @Component({
@@ -18,7 +18,7 @@ export class Table implements OnInit {
   store = inject(GlobalStore);
 
   classCard: string[] = [];
-
+  nPlayers: number = 0;
   useIcons: boolean = false;
   nCells: number = 0;
   size: 'small' | 'normal' = 'small';
@@ -35,6 +35,8 @@ export class Table implements OnInit {
     const settings = this.store.settings();
     const allPairs: Cell[] = [];
 
+    this.nPlayers = this.store.game().players.length;
+
     if (settings.grid === '6x6') {
       this.nCells = 6 * 6;
       this.gridClass = ['grid-6x6'];
@@ -45,22 +47,34 @@ export class Table implements OnInit {
       this.size = 'normal';
     }
 
-    for (let i = 0; i < this.nCells; i++) {
+    let j = 1;
+    for (let i = 0; i < this.nCells; i += 2) {
       allPairs.push({
         index: i,
-        value: (i % 10) + 1,
+        value: (j % 10) + 1,
         selected: false,
         temporalSelected: false,
       });
+
+      allPairs.push({
+        index: i + 1,
+        value: (j % 10) + 1,
+        selected: false,
+        temporalSelected: false,
+      });
+
+      j++;
     }
 
     this.useIcons = settings.theme == 'Icons';
+    this.allPairs = shuffle(allPairs);
     this.allPairs = shuffle(allPairs);
     this.allPairs.forEach((allPair, idx) => (allPair.index = idx));
   }
 
   selectedCard(idx: number) {
-    console.log({ idx });
+    this.store.updateCurrentMovesGame();
+
     if (this.pairIndex === 1) {
       this.pair.p1 = idx;
       this.allPairs[idx].temporalSelected = true;
@@ -74,32 +88,41 @@ export class Table implements OnInit {
       this.allPairs[idx].temporalSelected = true;
     }
 
-    this.store.updateCurrentMovesGame();
     this.cdr.markForCheck();
   }
 
   checkPairs() {
     this.classCard = ['not_allowed'];
-    this.cdr.markForCheck();
 
     setTimeout(() => {
       const { p0, p1 } = this.pair;
+
+      if (p1 < 0 || p0 < 0) {
+        console.error('Error Pair');
+        return;
+      }
 
       if (this.allPairs[p0].value === this.allPairs[p1].value) {
         const currentPlayer = this.store.game().currentPlayer;
 
         [p0, p1].forEach((i) => {
-          this.allPairs[p0].selected = true;
-          this.allPairs[p0].temporalSelected = false;
-          this.allPairs[p0].player = currentPlayer;
+          this.allPairs[i].selected = true;
+          this.allPairs[i].temporalSelected = false;
+          this.allPairs[i].player = currentPlayer;
         });
 
         this.store.updateCurrentPairSuccessfulGame();
+        this.checkAllPairs();
       } else {
         [p0, p1].forEach((i) => {
-          this.allPairs[p0].selected = false;
-          this.allPairs[p0].temporalSelected = false;
+          this.allPairs[i].selected = false;
+          this.allPairs[i].temporalSelected = false;
         });
+
+        if (this.nPlayers > 0) {
+          this.store.moveNextPlayer();
+          this.store.updateStatusGame(StatusEnum.ChangePlayer);
+        }
       }
 
       this.pair = {
@@ -107,7 +130,20 @@ export class Table implements OnInit {
         p1: -1,
       };
 
+      this.pairIndex = 0;
+      this.classCard = [];
       this.cdr.markForCheck();
     }, 500);
+
+    this.cdr.markForCheck();
+  }
+
+  checkAllPairs() {
+    const isAllSelected = this.allPairs.every((el) => el.selected);
+
+    if (isAllSelected) {
+      // @todo, show modal
+      alert('all selected');
+    }
   }
 }

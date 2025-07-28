@@ -6,8 +6,8 @@
         [useIcons]="useIcons"
         [value]="allPair.value"
         [idx]="allPair.index"
-        [temporalSelected]="allPair.temporalSelected ?? false"
-        [selected]="allPair.selected ?? false"
+        [temporalSelected]="allPair.temporalSelected"
+        [selected]="allPair.selected"
         [size]="size"
         (selectedCard)="!allPair.selected && selectedCard(allPair.index)" />
     }

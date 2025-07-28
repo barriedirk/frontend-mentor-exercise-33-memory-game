@@ -3,9 +3,12 @@
     <app-card-information class="footer-card" [value]="timeFormatPipe.transform(time())" direction="row" title="Time" />
     <app-card-information class="footer-card" [value]="moves().toString()" direction="row" title="Moves" />
   } @else {
-    @for (player of players; track player.index) {
-      <!-- <app-card-information class="footer-card" [selected]="true" title="Moves" value="39" /> -->
-      <app-card-information class="footer-card" [title]="`P${player.index}`" [value]="`${player.moves}`" />
+    @for (player of players(); track player.index) {
+      <app-card-information
+        class="footer-card"
+        [selected]="player.index === currentIndex()"
+        [title]="`P${player.index + 1}`"
+        [value]="player.index === currentIndex() ? moves().toString() : `${player.moves}`" />
     }
   }
 </section>

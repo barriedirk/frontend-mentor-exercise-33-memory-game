@@ -1,35 +1,36 @@
 @use '../../../sass/utils/mixins' as *;
 
-:host(.not-allowed) {
-  .flip-card {
-    pointer-events: none;
-  }
-}
-
 .flip-card {
   width: 46px;
   height: 46px;
   border-radius: 100%;
   perspective: 1000px;
   color: var(--clr-white);
+  cursor: pointer;
   @include text-preset-7;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
+  &.selected,
   &.temporal-selected {
-    transform: rotateY(180deg);
+    pointer-events: none;
+    cursor: none;
 
-    &__inner {
+    .flip-card__inner {
+      transform: rotateY(180deg);
+    }
+  }
+
+  &.temporal-selected {
+    .flip-card__back {
       background-color: var(--clr-blue-350);
     }
   }
 
   &.selected {
-    transform: rotateY(180deg);
-
-    &__inner {
+    .flip-card__back {
       background-color: var(--clr-orange-400);
     }
   }
@@ -49,6 +50,7 @@
     transform-style: preserve-3d;
   }
 
+  // @todo, temporal, remove
   &:hover &__inner {
     transform: rotateY(180deg);
   }
@@ -87,5 +89,13 @@
       width: 118px;
       height: 118px;
     }
+  }
+}
+
+:host(.not_allowed) {
+  .flip-card {
+    cursor: not-allowed;
+    opacity: 0.6;
+    cursor: none;
   }
 }

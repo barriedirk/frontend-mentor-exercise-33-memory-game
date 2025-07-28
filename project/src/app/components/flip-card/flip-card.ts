@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { Icon } from '@components/icon/icon';
 
 @Component({
@@ -15,6 +15,7 @@ export class FlipCard {
   @Input() useIcons!: boolean;
   @Input() temporalSelected: boolean = false;
   @Input() selected: boolean = false;
+  @Input() iconId: number = 1;
 
   @Output() selectedCard = new EventEmitter<void>();
 
@@ -32,10 +33,18 @@ export class FlipCard {
     return this._size;
   }
 
-  @Input() iconId: number = 1;
-  @Input() backText: string = 'Back side info';
+  ngOnInit() {
+    if (this.selected || this.temporalSelected) {
+      console.log({
+        idx: this.idx,
+        value: this.value,
+        selected: this.selected,
+        temporalSelected: this.temporalSelected,
+      });
+    }
+  }
 
   click() {
-    this.selectedCard.emit();
+    !this.temporalSelected && !this.selected && this.selectedCard.emit();
   }
 }

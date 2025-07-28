@@ -2,13 +2,11 @@ import { InjectionToken } from '@angular/core';
 import { Game, Memory, Settings } from '@interfaces/memory';
 import { initialData } from './initial-data';
 
-function isValidSettingsObject(obj: any): obj is Memory {
-  if (typeof obj !== 'object' || obj === null) return false;
+function isValidSettingsObject(settings: any): boolean {
+  if (typeof settings !== 'object' || settings === null) return false;
 
   return (
-    typeof obj.settings?.theme === 'string' &&
-    typeof obj.settings?.player === 'number' &&
-    typeof obj.settings?.grid === 'string'
+    typeof settings?.theme === 'string' && typeof settings?.players === 'number' && typeof settings?.grid === 'string'
   );
 }
 
@@ -33,6 +31,8 @@ export const MEMORY_STATE = new InjectionToken<Memory>('Memory', {
       const game = JSON.parse(gameRaw) as Game;
 
       const isValid = isValidSettingsObject(settings);
+
+      console.log('MEMORY_STATE', { settings, game, isValid });
 
       if (!isValid || typeof game !== 'object') throw new Error('Invalid format');
 
