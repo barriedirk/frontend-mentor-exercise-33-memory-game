@@ -32,8 +32,6 @@ export const MEMORY_STATE = new InjectionToken<Memory>('Memory', {
 
       const isValid = isValidSettingsObject(settings);
 
-      console.log('MEMORY_STATE', { settings, game, isValid });
-
       if (!isValid || typeof game !== 'object') throw new Error('Invalid format');
 
       memory = { settings, game };

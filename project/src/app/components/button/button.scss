@@ -7,7 +7,7 @@
   border-radius: 26px;
   width: 100%;
 
-  @media screen and (min-width: 41em) {
+  @media screen and (min-width: 40em) {
     @include text-preset-5;
     min-height: 70px;
   }
@@ -39,7 +39,14 @@
   padding-inline: 15px;
   width: auto;
 
-  @media screen and (min-width: 41em) {
+  @media screen and (min-width: 40em) {
+    @include text-preset-8;
+    min-height: 52px;
+  }
+}
+
+:host(.modal) .button {
+  @media screen and (min-width: 40em) {
     @include text-preset-8;
     min-height: 52px;
   }

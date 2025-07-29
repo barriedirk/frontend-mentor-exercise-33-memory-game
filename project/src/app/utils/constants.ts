@@ -1,0 +1,4 @@
+export const MODAL_RESULT = {
+  RESTART: 'RESTART',
+  SETUP_NEW_GAME: 'SETUP_NEW_GAME',
+};

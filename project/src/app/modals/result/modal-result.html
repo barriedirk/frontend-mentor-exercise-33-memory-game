@@ -1,0 +1,25 @@
+<div class="modal-backdrop"></div>
+<div class="modal-result scrollable">
+  <h3 class="modal-result__title">{{ title }}</h3>
+  <p class="modal-result__information">{{ information }}</p>
+
+  <div class="modal-result__body">
+    <ul>
+      @if (players.length === 1) {
+        <li>
+          <span>Time Elapsed</span>
+          <span>{{ players[0].time | timeFormat }}</span>
+        </li>
+        <li>
+          <span>Moves Taken</span>
+          <span>{{ players[0].moves }}</span>
+        </li>
+      } @else {}
+    </ul>
+  </div>
+
+  <div class="modal-result__buttons">
+    <app-button class="modal" (onClick)="closeModal(ACTIONS.RESTART)" text="Restart" theme="orange" />
+    <app-button class="modal" (onClick)="closeModal(ACTIONS.SETUP_NEW_GAME)" text="Setup New Game" theme="blue" />
+  </div>
+</div>

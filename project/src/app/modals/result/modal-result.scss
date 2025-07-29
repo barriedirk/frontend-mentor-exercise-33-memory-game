@@ -1,0 +1,88 @@
+@use '../../../sass/utils/mixins' as *;
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modal-result {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--clr-white);
+  padding: 1rem;
+  max-height: 95dvh;
+  overflow: auto;
+  z-index: 1000;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 327px;
+  padding: 20px;
+
+  &__title {
+    @include text-preset-7;
+    text-align: center;
+    color: var(--clr-blue-950);
+    margin-bottom: 10px;
+  }
+
+  &__information {
+    @include text-preset-12;
+    text-align: center;
+    color: var(--clr-blue-400);
+  }
+
+  // &__items {
+  //   max-height: 25dvh;
+  //   overflow: auto;
+  // }
+
+  &__body {
+    margin-block: 24px;
+  }
+
+  // &__total--details {
+  //   display: flex;
+  //   justify-content: space-between;
+  //   align-items: center;
+  // }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    & > * {
+      flex: 1 1 0;
+    }
+  }
+}
+
+@media screen and (min-width: 40em) {
+  .modal-result {
+    max-width: 654px;
+    padding: 54px;
+
+    &__title {
+      @include text-preset-2;
+    }
+
+    &__information {
+      @include text-preset-9;
+    }
+
+    &__body {
+      margin-block: 56px;
+    }
+
+    &__buttons {
+      flex-direction: row;
+    }
+  }
+}

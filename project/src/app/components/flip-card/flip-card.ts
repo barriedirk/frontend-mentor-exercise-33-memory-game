@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Icon } from '@components/icon/icon';
 
 @Component({
@@ -31,17 +31,6 @@ export class FlipCard {
   }
   get size() {
     return this._size;
-  }
-
-  ngOnInit() {
-    if (this.selected || this.temporalSelected) {
-      console.log({
-        idx: this.idx,
-        value: this.value,
-        selected: this.selected,
-        temporalSelected: this.temporalSelected,
-      });
-    }
   }
 
   click() {

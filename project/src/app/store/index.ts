@@ -35,7 +35,6 @@ export const GlobalStore = signalStore(
 
       syncState('game', store, game);
     },
-
     updateCurrentPlayerTime(time: number) {
       const game = store.game();
       const { players, currentPlayer } = game;
@@ -75,8 +74,6 @@ export const GlobalStore = signalStore(
 
       const currentPlayer = (index + 1) % players.length;
 
-      console.log('moveNextPlayer', { index, currentPlayer, players });
-
       syncState('game', store, { ...game, currentPlayer });
     },
     settingsSignal: computed(() => store.settings()),
@@ -84,8 +81,6 @@ export const GlobalStore = signalStore(
     getCurrentPlayer: computed<Player | undefined>(() => {
       const game = store.game();
       const { players, currentPlayer } = game;
-
-      console.log('getCurrentPlayer', { players, currentPlayer });
 
       return players[currentPlayer];
     }),
@@ -98,8 +93,6 @@ export const GlobalStore = signalStore(
     getCurrentMovesGame: computed<StatusEnum>(() => {
       const game = store.game();
       const { players, currentPlayer } = game;
-
-      console.log('getCurrentMovesGame', { players, currentPlayer });
 
       return players[currentPlayer].moves;
     }),

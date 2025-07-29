@@ -32,8 +32,6 @@ export class Footer implements OnInit, OnDestroy {
     effect(() => {
       const index: number = this.store.getIndexPlayer();
 
-      console.log('effect getIndexPlayer', { index, previousIndex });
-
       if (index === previousIndex) return;
 
       previousIndex = index;
@@ -44,8 +42,6 @@ export class Footer implements OnInit, OnDestroy {
     effect(() => {
       const moves: number = this.store.getCurrentMovesGame();
 
-      console.log('effect getCurrentMovesGame', { moves, previousMoves });
-
       if (moves === previousMoves) return;
 
       previousMoves = moves;
@@ -55,8 +51,6 @@ export class Footer implements OnInit, OnDestroy {
 
     effect(() => {
       const status: StatusEnum = this.store.getStatusGame();
-
-      console.log('efect getStatusGame', { status, previousStatus });
 
       if (status === previousStatus) return;
 
@@ -106,8 +100,6 @@ export class Footer implements OnInit, OnDestroy {
   initProperties() {
     const games = this.store.game();
     const player = this.store.getCurrentPlayer();
-
-    console.log('initProperties', { player, games });
 
     if (player) {
       this.currentIndex.set(games.currentPlayer);

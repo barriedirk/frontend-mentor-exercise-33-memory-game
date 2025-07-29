@@ -1,9 +1,18 @@
-import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { NgClass } from '@angular/common';
+
+import { Router } from '@angular/router';
+
+import { ModalResultService } from '@app/modals/result/modal-result-service';
+
+import { MODAL_RESULT } from '@app/utils/constants';
 import { shuffle } from '@app/utils/functions';
+
 import { FlipCard } from '@components/flip-card/flip-card';
+
 import { Cell } from '@interfaces/cell';
 import { Pair, StatusEnum } from '@interfaces/memory';
+
 import { GlobalStore } from '@store';
 
 @Component({
@@ -14,8 +23,10 @@ import { GlobalStore } from '@store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Table implements OnInit {
-  cdr = inject(ChangeDetectorRef);
-  store = inject(GlobalStore);
+  private modalResult = inject(ModalResultService);
+  private router = inject(Router);
+  private store = inject(GlobalStore);
+  private cdr = inject(ChangeDetectorRef);
 
   classCard: string[] = [];
   nPlayers: number = 0;
@@ -138,12 +149,23 @@ export class Table implements OnInit {
     this.cdr.markForCheck();
   }
 
-  checkAllPairs() {
+  async checkAllPairs() {
     const isAllSelected = this.allPairs.every((el) => el.selected);
 
     if (isAllSelected) {
-      // @todo, show modal
-      alert('all selected');
+      const { players } = this.store.game();
+      const action = await this.modalResult.open({ ...players });
+
+      switch (action) {
+        case MODAL_RESULT.RESTART:
+          this.store.updateStatusGame(StatusEnum.Restart);
+
+          break;
+        case MODAL_RESULT.SETUP_NEW_GAME:
+          this.router.navigate(['/']);
+
+          break;
+      }
     }
   }
 }
