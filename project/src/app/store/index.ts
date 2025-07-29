@@ -36,12 +36,13 @@ export const GlobalStore = signalStore(
       syncState('game', store, game);
     },
 
-    updatePlayerTime(index: number, time: number) {
+    updateCurrentPlayerTime(time: number) {
       const game = store.game();
-      const { players } = game;
+      const { players, currentPlayer } = game;
+      let player = players[currentPlayer];
 
-      players[index - 1] = {
-        ...players[index - 1],
+      player = {
+        ...player,
         time,
       };
 
@@ -56,17 +57,15 @@ export const GlobalStore = signalStore(
       const game = store.game();
       const { players, currentPlayer } = game;
 
-      players[currentPlayer - 1].moves++;
+      players[currentPlayer].moves++;
 
       syncState('game', store, { ...game, players });
     },
     updateCurrentPairSuccessfulGame() {
       const game = store.game();
-      const { players, currentPlayer: index } = game;
+      const { players, currentPlayer } = game;
 
-      if (index === 0 || index - 1 > players.length) return;
-
-      players[index - 1].pairSuccessful += 1;
+      players[currentPlayer].pairSuccessful += 1;
 
       syncState('game', store, { ...game, players });
     },
@@ -74,9 +73,7 @@ export const GlobalStore = signalStore(
       const game = store.game();
       const { players, currentPlayer: index } = game;
 
-      console.log('moveNextPlayer 1', { index, players });
-
-      const currentPlayer = (index + 1) % (players.length + 1);
+      const currentPlayer = (index + 1) % players.length;
 
       console.log('moveNextPlayer', { index, currentPlayer, players });
 
@@ -86,11 +83,11 @@ export const GlobalStore = signalStore(
     gameSignal: computed(() => store.game()),
     getCurrentPlayer: computed<Player | undefined>(() => {
       const game = store.game();
-      const { players, currentPlayer: index } = game;
+      const { players, currentPlayer } = game;
 
-      if (index === 0 || index - 1 > game.players.length) return undefined;
+      console.log('getCurrentPlayer', { players, currentPlayer });
 
-      return players[index - 1];
+      return players[currentPlayer];
     }),
     getIndexPlayer: computed<number>(() => {
       return store.game().currentPlayer;
@@ -100,11 +97,11 @@ export const GlobalStore = signalStore(
     }),
     getCurrentMovesGame: computed<StatusEnum>(() => {
       const game = store.game();
-      const { players, currentPlayer: index } = game;
+      const { players, currentPlayer } = game;
 
-      if (index === 0 || index - 1 > game.players.length) return 0;
+      console.log('getCurrentMovesGame', { players, currentPlayer });
 
-      return players[index - 1].moves;
+      return players[currentPlayer].moves;
     }),
   })),
 );

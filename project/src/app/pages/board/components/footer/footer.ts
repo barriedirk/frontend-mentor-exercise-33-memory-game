@@ -32,7 +32,7 @@ export class Footer implements OnInit, OnDestroy {
     effect(() => {
       const index: number = this.store.getIndexPlayer();
 
-      console.log('getIndexPlayer', index);
+      console.log('effect getIndexPlayer', { index, previousIndex });
 
       if (index === previousIndex) return;
 
@@ -44,6 +44,8 @@ export class Footer implements OnInit, OnDestroy {
     effect(() => {
       const moves: number = this.store.getCurrentMovesGame();
 
+      console.log('effect getCurrentMovesGame', { moves, previousMoves });
+
       if (moves === previousMoves) return;
 
       previousMoves = moves;
@@ -54,21 +56,22 @@ export class Footer implements OnInit, OnDestroy {
     effect(() => {
       const status: StatusEnum = this.store.getStatusGame();
 
+      console.log('efect getStatusGame', { status, previousStatus });
+
       if (status === previousStatus) return;
 
       previousStatus = status;
 
-      console.log('update Status Enum ');
-
       switch (status) {
         case StatusEnum.ChangePlayer:
+          console.log('ChangePlayer');
           this.getLastPlayersInformation();
-          this.initializePlayer();
-          this.initInterval();
+          this.store.updateStatusGame(StatusEnum.Start);
 
           break;
         case StatusEnum.Start:
-          this.initializePlayer();
+          console.log('Start');
+          this.initProperties();
           this.initInterval();
 
           break;
@@ -100,12 +103,14 @@ export class Footer implements OnInit, OnDestroy {
     this.getLastPlayersInformation();
   }
 
-  initializePlayer() {
+  initProperties() {
     const games = this.store.game();
     const player = this.store.getCurrentPlayer();
 
+    console.log('initProperties', { player, games });
+
     if (player) {
-      this.currentIndex.set(games.currentPlayer - 1);
+      this.currentIndex.set(games.currentPlayer);
       this.time.set(player.time);
       this.moves.set(player.moves);
     }
@@ -126,7 +131,7 @@ export class Footer implements OnInit, OnDestroy {
   updateTime() {
     this.time.update((n) => n + 1);
 
-    this.store.updatePlayerTime(this.currentIndex(), this.time());
+    this.store.updateCurrentPlayerTime(this.time());
   }
 
   clearInterval() {

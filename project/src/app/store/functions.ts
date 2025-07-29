@@ -28,7 +28,7 @@ export function initGame(settings: Settings): Game {
 
   return {
     ...game,
-    currentPlayer: 1,
+    currentPlayer: 0,
     players,
   };
 }
