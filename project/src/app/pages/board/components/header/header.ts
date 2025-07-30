@@ -18,6 +18,8 @@ export class Header {
   private store = inject(GlobalStore);
 
   restart() {
+    this.store.clearGame();
+    this.store.initGame();
     this.store.updateStatusGame(StatusEnum.Restart);
   }
 

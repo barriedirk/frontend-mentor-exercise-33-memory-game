@@ -16,10 +16,10 @@ export class ModalResultService {
       environmentInjector: this.injector,
     });
 
+    // @todo, remove
     console.log({ players });
-    debugger;
 
-    this.modalRef.instance.players = players.sort((a, b) => a.pairSuccessful - b.pairSuccessful);
+    this.modalRef.instance.players = players;
 
     const result = new Promise<any>((resolve) => {
       this.modalRef!.instance.close.subscribe((action) => {

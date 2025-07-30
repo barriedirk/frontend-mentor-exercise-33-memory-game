@@ -18,8 +18,13 @@
     &.grid-6x6 {
       grid-template-columns: repeat(6, 1fr);
     }
+
     &.grid-4x4 {
       grid-template-columns: repeat(4, 1fr);
+    }
+
+    &.no_show {
+      opacity: 0;
     }
   }
 }

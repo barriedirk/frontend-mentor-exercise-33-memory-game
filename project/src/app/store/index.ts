@@ -25,7 +25,7 @@ export const GlobalStore = signalStore(
     updateSettings(settings: Settings) {
       syncState('settings', store, settings);
     },
-    clearGamer() {
+    clearGame() {
       const game = clearGame();
 
       syncState('game', store, game);
@@ -38,14 +38,12 @@ export const GlobalStore = signalStore(
     updateCurrentPlayerTime(time: number) {
       const game = store.game();
       const { players, currentPlayer } = game;
-      let player = players[currentPlayer];
 
-      player = {
-        ...player,
-        time,
-      };
+      players[currentPlayer].time = time;
 
-      syncState('game', store, { ...game, players });
+      console.log('player', { players, time });
+
+      syncState('game', store, { ...game, players: [...players] });
     },
     updateStatusGame(status: StatusEnum) {
       const game = store.game();
@@ -58,7 +56,7 @@ export const GlobalStore = signalStore(
 
       players[currentPlayer].moves++;
 
-      syncState('game', store, { ...game, players });
+      syncState('game', store, { ...game, players: [...players] });
     },
     updateCurrentPairSuccessfulGame() {
       const game = store.game();
@@ -66,7 +64,7 @@ export const GlobalStore = signalStore(
 
       players[currentPlayer].pairSuccessful += 1;
 
-      syncState('game', store, { ...game, players });
+      syncState('game', store, { ...game, players: [...players] });
     },
     moveNextPlayer() {
       const game = store.game();

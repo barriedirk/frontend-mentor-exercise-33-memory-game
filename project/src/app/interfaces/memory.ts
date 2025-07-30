@@ -1,11 +1,12 @@
 export enum StatusEnum {
   Start = 1,
   Stop = 2,
-  Continue = 3,
-  NewGame = 4,
-  Restart = 5,
-  ChangePlayer = 6,
-  GameOver = 7,
+  EndGame = 3,
+  Continue = 4,
+  NewGame = 5,
+  Restart = 6,
+  ChangePlayer = 7,
+  GameOver = 8,
 }
 
 export interface Memory {

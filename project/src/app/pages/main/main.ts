@@ -39,8 +39,6 @@ export class MainPage {
     const settings: Settings = { ...settingsRaw, players: Number(settingsRaw.players) };
 
     this.store.updateSettings(settings);
-    this.store.initGame();
-
     this.router.navigate(['/board']);
   }
 }

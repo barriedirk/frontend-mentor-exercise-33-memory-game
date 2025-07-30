@@ -96,6 +96,9 @@
   .flip-card {
     cursor: not-allowed;
     opacity: 0.6;
-    cursor: none;
+
+    &.selected {
+      opacity: 1;
+    }
   }
 }

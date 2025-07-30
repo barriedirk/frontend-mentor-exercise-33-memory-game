@@ -4,17 +4,30 @@
   <p class="modal-result__information">{{ information }}</p>
 
   <div class="modal-result__body">
-    <ul>
+    <ul class="modal-result__players">
       @if (players.length === 1) {
-        <li>
-          <span>Time Elapsed</span>
-          <span>{{ players[0].time | timeFormat }}</span>
+        <li class="modal-result__player">
+          <span class="player--title">Time Elapsed</span>
+          <span class="player--value">{{ players[0].time | timeFormat }}</span>
         </li>
-        <li>
-          <span>Moves Taken</span>
-          <span>{{ players[0].moves }}</span>
+        <li class="modal-result__player">
+          <span class="player--title">Moves Taken</span>
+          <span class="player--value">{{ players[0].moves }}</span>
         </li>
-      } @else {}
+      } @else {
+        @for (player of players; track player; let i = $index) {
+          <li class="modal-result__player" [class.selected]="winners.includes(player.index)">
+            <span class="player--title">
+              Player {{ player.index + 1 }}
+
+              @if (winners.includes(player.index)) {
+                (Winner!)
+              }
+            </span>
+            <span class="player--value">{{ player.pairSuccessful }} Pairs</span>
+          </li>
+        }
+      }
     </ul>
   </div>
 

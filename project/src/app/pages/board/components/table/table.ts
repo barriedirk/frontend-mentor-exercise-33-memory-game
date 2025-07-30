@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnInit } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 import { Router } from '@angular/router';
@@ -42,6 +42,23 @@ export class Table implements OnInit {
   };
   pairIndex = 0;
 
+  constructor() {
+    let previousStatus: StatusEnum | null = null;
+
+    effect(() => {
+      const status: StatusEnum = this.store.getStatusGame();
+
+      if (status === previousStatus) return;
+
+      previousStatus = status;
+
+      if (previousStatus === StatusEnum.Restart) {
+        this.clearSelection();
+        this.initGame();
+      }
+    });
+  }
+
   ngOnInit() {
     const settings = this.store.settings();
     const allPairs: Cell[] = [];
@@ -57,6 +74,16 @@ export class Table implements OnInit {
       this.gridClass = ['grid-4x4'];
       this.size = 'normal';
     }
+
+    this.initGame();
+  }
+
+  initGame() {
+    this.classCard = ['no_show', 'not_allowed'];
+    this.cdr.markForCheck();
+
+    const settings = this.store.settings();
+    const allPairs: Cell[] = [];
 
     let j = 1;
     for (let i = 0; i < this.nCells; i += 2) {
@@ -78,9 +105,20 @@ export class Table implements OnInit {
     }
 
     this.useIcons = settings.theme == 'Icons';
-    this.allPairs = shuffle(allPairs);
-    this.allPairs = shuffle(allPairs);
+    this.allPairs = shuffle(allPairs, 2);
     this.allPairs.forEach((allPair, idx) => (allPair.index = idx));
+
+    setTimeout(() => {
+      this.classCard = [];
+
+      this.cdr.markForCheck();
+    }, 300);
+  }
+
+  clearSelection() {
+    this.allPairs.forEach((allPair) => (allPair.selected = false));
+
+    this.cdr.markForCheck();
   }
 
   selectedCard(idx: number) {
@@ -104,6 +142,7 @@ export class Table implements OnInit {
 
   checkPairs() {
     this.classCard = ['not_allowed'];
+    this.cdr.markForCheck();
 
     setTimeout(() => {
       const { p0, p1 } = this.pair;
@@ -145,20 +184,26 @@ export class Table implements OnInit {
       this.classCard = [];
       this.cdr.markForCheck();
     }, 500);
-
-    this.cdr.markForCheck();
   }
 
   async checkAllPairs() {
     const isAllSelected = this.allPairs.every((el) => el.selected);
 
     if (isAllSelected) {
+      this.clearSelection();
+      this.store.updateStatusGame(StatusEnum.EndGame);
+
       const { players } = this.store.game();
-      const action = await this.modalResult.open({ ...players });
+
+      const action = await this.modalResult.open([...players]);
 
       switch (action) {
         case MODAL_RESULT.RESTART:
+          this.store.clearGame();
+          this.store.initGame();
           this.store.updateStatusGame(StatusEnum.Restart);
+
+          this.initGame();
 
           break;
         case MODAL_RESULT.SETUP_NEW_GAME:

@@ -14,9 +14,10 @@ import { StatusEnum } from '@interfaces/memory';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardPage implements OnInit {
-  store = inject(GlobalStore);
+  private store = inject(GlobalStore);
 
   ngOnInit(): void {
+    this.store.initGame();
     this.store.updateStatusGame(StatusEnum.Start);
   }
 }

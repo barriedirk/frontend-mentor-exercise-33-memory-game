@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  effect,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 
 import { CardInformation } from '@components/card-information/card-information';
 import { Player, StatusEnum } from '@interfaces/memory';
@@ -13,7 +22,9 @@ import { GlobalStore } from '@store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Footer implements OnInit, OnDestroy {
-  store = inject(GlobalStore);
+  private cdr = inject(ChangeDetectorRef);
+  private store = inject(GlobalStore);
+
   timeFormatPipe = new TimeFormatPipe();
   nPlayers: number = 0;
   players = signal<Player[]>([]);
@@ -58,17 +69,17 @@ export class Footer implements OnInit, OnDestroy {
 
       switch (status) {
         case StatusEnum.ChangePlayer:
-          console.log('ChangePlayer');
           this.getLastPlayersInformation();
           this.store.updateStatusGame(StatusEnum.Start);
 
           break;
         case StatusEnum.Start:
-          console.log('Start');
+          console.log('StatusEnum.Start');
           this.initProperties();
           this.initInterval();
 
           break;
+        case StatusEnum.EndGame:
         case StatusEnum.Stop:
           this.clearInterval();
 
@@ -80,13 +91,19 @@ export class Footer implements OnInit, OnDestroy {
         case StatusEnum.Restart:
           this.time.set(0);
           this.moves.set(0);
-          this.initInterval();
+          this.currentIndex.set(0);
 
-          previousStatus = StatusEnum.Start;
+          previousStatus = null;
+          previousMoves = null;
+          previousIndex = 0;
+          this.getLastPlayersInformation();
+
           this.store.updateStatusGame(StatusEnum.Start);
 
           break;
       }
+
+      this.cdr.markForCheck();
     });
   }
 
