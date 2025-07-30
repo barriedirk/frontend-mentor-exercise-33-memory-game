@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 
 import { StatusEnum } from '@interfaces/memory';
 
@@ -16,6 +16,12 @@ import { Router } from '@angular/router';
 export class Header {
   private router = inject(Router);
   private store = inject(GlobalStore);
+  showMenu = signal<boolean>(false);
+
+  menu() {
+    this.store.updateStatusGame(StatusEnum.Stop);
+    this.showMenu.set(true);
+  }
 
   restart() {
     this.store.clearGame();
@@ -25,5 +31,10 @@ export class Header {
 
   newGame() {
     this.router.navigate(['/']);
+  }
+
+  resumeGame() {
+    this.store.updateStatusGame(StatusEnum.Start);
+    this.showMenu.set(false);
   }
 }

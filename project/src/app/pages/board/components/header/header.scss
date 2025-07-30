@@ -16,17 +16,62 @@
     color: var(--clr-blue-950);
   }
 
+  &__options--menu,
   &__options {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 10px;
+  }
+
+  &__options--menu {
+    display: none;
+  }
+
+  @media screen and (max-width: 39.9375em) {
+    // &.show-menu &__options--menu::after {
+    //   content: '';
+    //   position: absolute;
+    //   display: block;
+    //   position: 0;
+    //   inset: 0;
+    //   background-color: hsla(0, 0%, 70%, 0.5);
+    //   z-index: 1;
+    // }
+
+    &.show-menu &__options--menu {
+      display: flex;
+      position: absolute;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      left: 50%;
+      z-index: 1000;
+      background: var(--clr-white);
+      padding: 20px;
+      align-items: center;
+      border-radius: 10px;
+    }
   }
 
   @media screen and (min-width: 40em) {
     padding-block: 36px;
 
+    &__options {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &__options--menu {
+      display: flex;
+      flex-direction: row;
+    }
+
     &__title {
       @include text-preset-4;
+    }
+
+    .button--menu,
+    .button--resume-game {
+      display: none;
     }
   }
 }

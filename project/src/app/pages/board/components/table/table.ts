@@ -61,7 +61,6 @@ export class Table implements OnInit {
 
   ngOnInit() {
     const settings = this.store.settings();
-    const allPairs: Cell[] = [];
 
     this.nPlayers = this.store.game().players.length;
 
@@ -116,7 +115,10 @@ export class Table implements OnInit {
   }
 
   clearSelection() {
-    this.allPairs.forEach((allPair) => (allPair.selected = false));
+    this.allPairs.forEach((allPair) => {
+      allPair.temporalSelected = false;
+      allPair.selected = false;
+    });
 
     this.cdr.markForCheck();
   }

@@ -1,7 +1,11 @@
-<section class="header">
+<section class="header" [class.show-menu]="showMenu()">
   <h1 class="header__title">memory</h1>
   <div class="header__options">
-    <app-button class="button--header" (onClick)="restart()" text="Restart" theme="orange" />
-    <app-button class="button--header" (onClick)="newGame()" text="New Game" theme="blue" />
+    <app-button class="button--header button--menu" (onClick)="menu()" text="Menu" theme="orange" />
+    <div class="header__options--menu">
+      <app-button class="button--header" (onClick)="restart()" text="Restart" theme="orange" />
+      <app-button class="button--header" (onClick)="newGame()" text="New Game" theme="blue" />
+      <app-button class="button--header button--resume-game" (onClick)="resumeGame()" text="Resume Game" theme="blue" />
+    </div>
   </div>
 </section>
