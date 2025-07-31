@@ -50,10 +50,10 @@
     transform-style: preserve-3d;
   }
 
-  // @todo, temporal, remove
-  &:hover &__inner {
-    transform: rotateY(180deg);
-  }
+  // @todo, only for testing
+  // &:hover &__inner {
+  //   transform: rotateY(180deg);
+  // }
 
   &__front,
   &__back {
