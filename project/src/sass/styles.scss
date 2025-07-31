@@ -24,7 +24,7 @@ button:disabled {
 }
 
 ::view-transition-new(root) {
-  animation: slide-out-to-right 0.5s forwards;
+  animation: slide-in-from-right 0.5s forwards;
 }
 
 @keyframes slide-out-to-left {
