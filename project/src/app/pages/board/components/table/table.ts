@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  effect,
+  ElementRef,
+  inject,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { NgClass } from '@angular/common';
 
 import { Router } from '@angular/router';
@@ -28,6 +38,7 @@ export class Table implements OnInit {
   private store = inject(GlobalStore);
   private cdr = inject(ChangeDetectorRef);
 
+  announcement: string = '';
   classCard: string[] = [];
   nPlayers: number = 0;
   useIcons: boolean = false;
@@ -41,6 +52,9 @@ export class Table implements OnInit {
     p1: -1,
   };
   pairIndex = 0;
+
+  @ViewChildren('flipCard', { read: ElementRef })
+  flipCardElements!: QueryList<ElementRef>;
 
   constructor() {
     let previousStatus: StatusEnum | null = null;
@@ -155,6 +169,7 @@ export class Table implements OnInit {
       }
 
       if (this.allPairs[p0].value === this.allPairs[p1].value) {
+        this.announcement = 'Match!';
         const currentPlayer = this.store.game().currentPlayer;
 
         [p0, p1].forEach((i) => {
@@ -166,6 +181,7 @@ export class Table implements OnInit {
         this.store.updateCurrentPairSuccessfulGame();
         this.checkAllPairs();
       } else {
+        this.announcement = 'Try again!';
         [p0, p1].forEach((i) => {
           this.allPairs[i].selected = false;
           this.allPairs[i].temporalSelected = false;
@@ -177,6 +193,7 @@ export class Table implements OnInit {
         }
       }
 
+      setTimeout(() => (this.announcement = ''), 2000);
       this.pair = {
         p0: -1,
         p1: -1,
@@ -186,6 +203,42 @@ export class Table implements OnInit {
       this.classCard = [];
       this.cdr.markForCheck();
     }, 500);
+  }
+
+  cardKeydown(event: KeyboardEvent, card: Cell, currentIndex: number) {
+    const cols = this.gridClass.includes('grid-6x6') ? 6 : 4;
+
+    let nextIndex = currentIndex;
+
+    switch (event.key) {
+      case 'ArrowRight':
+        nextIndex = (currentIndex + 1) % this.allPairs.length;
+        break;
+      case 'ArrowLeft':
+        nextIndex = (currentIndex - 1 + this.allPairs.length) % this.allPairs.length;
+        break;
+      case 'ArrowDown':
+        nextIndex = (currentIndex + cols) % this.allPairs.length;
+        break;
+      case 'ArrowUp':
+        nextIndex = (currentIndex - cols + this.allPairs.length) % this.allPairs.length;
+        break;
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+
+        !card.selected && !card.temporalSelected && this.selectedCard(card.index);
+        return;
+    }
+
+    event.preventDefault();
+    this.focusCard(nextIndex);
+  }
+
+  focusCard(index: number) {
+    const element = this.flipCardElements.get(index);
+
+    element?.nativeElement.focus();
   }
 
   async checkAllPairs() {

@@ -1,4 +1,4 @@
-<section class="footer">
+<footer class="footer" role="contentinfo" aria-label="Game stats">
   @if (nPlayers === 1) {
     <app-card-information class="footer-card" [value]="timeFormatPipe.transform(time())" direction="row" title="Time" />
     <app-card-information class="footer-card" [value]="moves().toString()" direction="row" title="Moves" />
@@ -8,7 +8,11 @@
         class="footer-card"
         [selected]="player.index === currentIndex()"
         [title]="`P${player.index + 1}`"
-        [value]="player.index === currentIndex() ? moves().toString() : `${player.moves}`" />
+        [value]="player.index === currentIndex() ? moves().toString() : `${player.moves}`"
+        [attr.aria-current]="player.index === currentIndex() ? 'true' : null"
+        [attr.aria-label]="
+          'Player ' + (player.index + 1) + (player.index === currentIndex() ? ', current turn' : '')
+        " />
     }
   }
-</section>
+</footer>

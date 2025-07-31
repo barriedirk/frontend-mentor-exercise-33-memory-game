@@ -3,7 +3,12 @@
   [ngClass]="cardClasses"
   [class.temporal-selected]="temporalSelected"
   [class.selected]="selected"
-  (click)="click()">
+  [attr.aria-label]="getAriaLabel()"
+  [attr.aria-pressed]="temporalSelected || selected"
+  (click)="click()"
+  (keydown)="keydown($event)"
+  tabindex="0"
+  role="button">
   <div class="flip-card__inner">
     <div class="flip-card__front"></div>
     <div class="flip-card__back">

@@ -1,11 +1,36 @@
 <section class="header" [class.show-menu]="showMenu()">
   <h1 class="header__title">memory</h1>
   <div class="header__options">
-    <app-button class="button--header button--menu" (onClick)="menu()" text="Menu" theme="orange" />
-    <div class="header__options--menu">
-      <app-button class="button--header" (onClick)="restart()" text="Restart" theme="orange" />
-      <app-button class="button--header" (onClick)="newGame()" text="New Game" theme="blue" />
-      <app-button class="button--header button--resume-game" (onClick)="resumeGame()" text="Resume Game" theme="blue" />
+    <app-button
+      class="button--header button--menu"
+      #btnMenu
+      [attr.aria-expanded]="showMenu()"
+      (onClick)="menu()"
+      text="Menu"
+      theme="orange"
+      aria-haspopup="true"
+      aria-controls="menu-panel" />
+    <div class="header__options--menu" id="menu-panel" role="menu" aria-label="Game Controls">
+      <app-button
+        class="header--show-modal button--header"
+        #btnRestart
+        (onClick)="restart()"
+        role="menuitem"
+        text="Restart"
+        theme="orange" />
+      <app-button
+        class="header--show-modal button--header"
+        (onClick)="newGame()"
+        text="New Game"
+        role="menuitem"
+        theme="blue" />
+      <app-button
+        class="header--show-modal button--header button--resume-game"
+        (onClick)="resumeGame()"
+        text="Resume Game"
+        role="menuitem"
+        theme="blue" />
     </div>
   </div>
+  <div class="header-backdrop" aria-hidden="true"></div>
 </section>

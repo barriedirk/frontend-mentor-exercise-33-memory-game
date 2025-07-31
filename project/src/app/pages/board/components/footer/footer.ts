@@ -74,7 +74,6 @@ export class Footer implements OnInit, OnDestroy {
 
           break;
         case StatusEnum.Start:
-          console.log('StatusEnum.Start');
           this.initProperties();
           this.initInterval();
 

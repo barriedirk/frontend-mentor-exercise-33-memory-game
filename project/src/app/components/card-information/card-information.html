@@ -2,7 +2,9 @@
   class="card-information"
   [ngClass]="{ selected: selected }"
   [class.row]="direction === 'row'"
-  [attr.aria-labelledby]="labelledby">
-  <h3 class="card-information__title" [id]="labelledby">{{ title }}</h3>
+  [attr.aria-label]="`${title}: ${value}`"
+  role="group"
+  tabindex="-1">
+  <h3 class="card-information__title">{{ title }}</h3>
   <p class="card-information__value">{{ value }}</p>
 </div>

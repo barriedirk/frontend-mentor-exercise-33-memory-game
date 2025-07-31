@@ -41,8 +41,6 @@ export const GlobalStore = signalStore(
 
       players[currentPlayer].time = time;
 
-      console.log('player', { players, time });
-
       syncState('game', store, { ...game, players: [...players] });
     },
     updateStatusGame(status: StatusEnum) {

@@ -51,3 +51,7 @@
     min-height: 52px;
   }
 }
+
+:host(.header--show-modal) .button {
+  width: 100%;
+}

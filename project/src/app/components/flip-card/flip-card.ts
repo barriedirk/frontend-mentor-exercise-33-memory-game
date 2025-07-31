@@ -33,7 +33,26 @@ export class FlipCard {
     return this._size;
   }
 
+  getAriaLabel(): string {
+    if (this.selected) return `Card with value ${this.value}, matched`;
+    if (this.temporalSelected) return `Card with value ${this.value}, temporarily revealed`;
+
+    return `Hidden card`;
+  }
+
   click() {
     !this.temporalSelected && !this.selected && this.selectedCard.emit();
+  }
+
+  keydown(event: KeyboardEvent) {
+    if ((event.key === 'Enter' || event.key === ' ') && !this.selected && !this.temporalSelected) {
+      event.preventDefault();
+
+      console.log('keydown', {
+        selected: !this.selected,
+        temporalSelected: !this.temporalSelected,
+      });
+      this.click();
+    }
   }
 }

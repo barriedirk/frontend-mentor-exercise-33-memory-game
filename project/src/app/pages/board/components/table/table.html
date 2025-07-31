@@ -1,7 +1,9 @@
 <section class="table" [class.icons]="useIcons">
-  <div class="table__grid" [ngClass]="gridClass">
+  <div class="table__grid" [ngClass]="gridClass" role="grid" aria-label="Memory game grid">
     @for (allPair of allPairs; track allPair.index) {
       <app-flip-card
+        #flipCard
+        [attr.aria-pressed]="allPair.temporalSelected || allPair.selected"
         [class]="classCard"
         [useIcons]="useIcons"
         [value]="allPair.value"
@@ -9,7 +11,18 @@
         [temporalSelected]="allPair.temporalSelected"
         [selected]="allPair.selected"
         [size]="size"
-        (selectedCard)="!allPair.selected && selectedCard(allPair.index)" />
+        (selectedCard)="!allPair.selected && selectedCard(allPair.index)"
+        (keydown)="cardKeydown($event, allPair, allPair.index)"
+        role="gridcell"
+        tabindex="0"
+        aria-label="Card" />
     }
+  </div>
+  <div
+    class="sr-announcer"
+    aria-live="polite"
+    aria-atomic="true"
+    style="position: absolute; width: 1px; height: 1px; overflow: hidden">
+    {{ announcement }}
   </div>
 </section>
