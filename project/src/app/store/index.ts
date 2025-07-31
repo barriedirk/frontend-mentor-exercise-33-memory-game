@@ -92,5 +92,11 @@ export const GlobalStore = signalStore(
 
       return players[currentPlayer].moves;
     }),
+    getCurrentPairSuccessfulGame: computed<StatusEnum>(() => {
+      const game = store.game();
+      const { players, currentPlayer } = game;
+
+      return players[currentPlayer].pairSuccessful;
+    }),
   })),
 );

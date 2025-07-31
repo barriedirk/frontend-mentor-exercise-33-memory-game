@@ -34,10 +34,12 @@ export class Footer implements OnInit, OnDestroy {
   currentIndex = signal<number>(0);
   time = signal<number>(0);
   moves = signal<number>(0);
+  pairSuccessful = signal<number>(0);
 
   constructor() {
     let previousStatus: StatusEnum | null = null;
     let previousMoves: number | null = null;
+    let previousPairSuccessful: number | null = null;
     let previousIndex: number | null = 0;
 
     effect(() => {
@@ -48,6 +50,16 @@ export class Footer implements OnInit, OnDestroy {
       previousIndex = index;
 
       this.currentIndex.set(index);
+    });
+
+    effect(() => {
+      const pairSuccessful: number = this.store.getCurrentPairSuccessfulGame();
+
+      if (pairSuccessful === previousPairSuccessful) return;
+
+      previousPairSuccessful = pairSuccessful;
+
+      this.pairSuccessful.set(pairSuccessful);
     });
 
     effect(() => {

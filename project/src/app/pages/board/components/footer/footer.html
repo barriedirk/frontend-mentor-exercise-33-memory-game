@@ -8,7 +8,7 @@
         class="footer-card"
         [selected]="player.index === currentIndex()"
         [title]="`P${player.index + 1}`"
-        [value]="player.index === currentIndex() ? moves().toString() : `${player.moves}`"
+        [value]="player.index === currentIndex() ? pairSuccessful().toString() : `${player.pairSuccessful}`"
         [attr.aria-current]="player.index === currentIndex() ? 'true' : null"
         [attr.aria-label]="
           'Player ' + (player.index + 1) + (player.index === currentIndex() ? ', current turn' : '')
