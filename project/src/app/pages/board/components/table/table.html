@@ -1,5 +1,5 @@
 <section class="table" [class.icons]="useIcons">
-  <div class="table__grid" [ngClass]="gridClass" role="grid" aria-label="Memory game grid">
+  <div class="table__grid not_allowed" [ngClass]="gridClass" role="grid" aria-label="Memory game grid">
     @for (allPair of allPairs; track allPair.index) {
       <app-flip-card
         #flipCard
@@ -11,6 +11,7 @@
         [temporalSelected]="allPair.temporalSelected"
         [selected]="allPair.selected"
         [size]="size"
+        [isCheckingPair]="isCheckingPair"
         (selectedCard)="!allPair.selected && selectedCard(allPair.index)"
         (keydown)="cardKeydown($event, allPair, allPair.index)"
         role="gridcell"

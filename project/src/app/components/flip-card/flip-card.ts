@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Signal } from '@angular/core';
 import { Icon } from '@components/icon/icon';
 
 @Component({
@@ -16,6 +16,7 @@ export class FlipCard {
   @Input() temporalSelected: boolean = false;
   @Input() selected: boolean = false;
   @Input() iconId: number = 1;
+  @Input() isCheckingPair!: Signal<boolean>;
 
   @Output() selectedCard = new EventEmitter<void>();
 
@@ -41,6 +42,8 @@ export class FlipCard {
   }
 
   click() {
+    if (this.isCheckingPair()) return;
+
     !this.temporalSelected && !this.selected && this.selectedCard.emit();
   }
 
@@ -48,6 +51,7 @@ export class FlipCard {
     if ((event.key === 'Enter' || event.key === ' ') && !this.selected && !this.temporalSelected) {
       event.preventDefault();
 
+      // @todo, remove
       console.log('keydown', {
         selected: !this.selected,
         temporalSelected: !this.temporalSelected,

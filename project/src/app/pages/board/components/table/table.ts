@@ -7,6 +7,7 @@ import {
   inject,
   OnInit,
   QueryList,
+  signal,
   ViewChildren,
 } from '@angular/core';
 import { NgClass } from '@angular/common';
@@ -37,6 +38,8 @@ export class Table implements OnInit {
   private router = inject(Router);
   private store = inject(GlobalStore);
   private cdr = inject(ChangeDetectorRef);
+
+  isCheckingPair = signal<boolean>(false);
 
   announcement: string = '';
   classCard: string[] = [];
@@ -144,6 +147,7 @@ export class Table implements OnInit {
       this.pair.p1 = idx;
       this.allPairs[idx].temporalSelected = true;
 
+      this.isCheckingPair.set(true);
       this.checkPairs();
     }
 
@@ -164,7 +168,7 @@ export class Table implements OnInit {
       const { p0, p1 } = this.pair;
 
       if (p1 < 0 || p0 < 0) {
-        console.error('Error Pair');
+        console.error('Error Pair', { p1, p0 });
         return;
       }
 
@@ -201,6 +205,7 @@ export class Table implements OnInit {
 
       this.pairIndex = 0;
       this.classCard = [];
+      this.isCheckingPair.set(false);
       this.cdr.markForCheck();
     }, 500);
   }
